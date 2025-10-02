@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Play Game</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    iframe {
+      border: none;
+      width: 800px;
+      height: 600px;
+      background: #000;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #2196f3;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0d8bf2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preview iframe -->
+  <iframe id="gameFrame" src="game.html" allowfullscreen></iframe>
+
+  <!-- Button to open fullscreen in new tab -->
+  <button id="playFullscreen">Play Fullscreen</button>
+
+  <script>
+    document.getElementById("playFullscreen").addEventListener("click", function () {
+      const iframe = document.getElementById("gameFrame");
+      const gameUrl = iframe.src;
+
+      const newWin = window.open(gameUrl, "_blank");
+
+      if (!newWin) {
+        alert("Popup blocked! Please allow popups.");
+        return;
+      }
+
+      // Try fullscreen after new tab loads
+      newWin.onload = function () {
+        try {
+          if (newWin.document.documentElement.requestFullscreen) {
+            newWin.document.documentElement.requestFullscreen();
+          } else if (newWin.document.documentElement.webkitRequestFullscreen) {
+            newWin.document.documentElement.webkitRequestFullscreen();
+          } else if (newWin.document.documentElement.msRequestFullscreen) {
+            newWin.document.documentElement.msRequestFullscreen();
+          }
+        } catch (err) {
+          console.warn("Fullscreen not allowed automatically:", err);
+        }
+      };
+    });
+  </script>
+
+</body>
+</html>
