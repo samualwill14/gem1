@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Dynamic Game Embed"/>
+  <Content type="html">
+    <![CDATA[
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style>
+            body, html {
+              padding: 0;
+              margin: 0;
+              overflow: hidden;
+              height: 100%;
+              background-color: #000;
+            }
+            #game-container {
+              position: relative;
+              width: 100%;
+              height: 100%;
+            }
+            #play-overlay {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #000;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 10;
+            }
+            .play-button {
+              padding: 20px 40px;
+              background: #000;
+              color: #fff;
+              border: 2px solid #4a148c;
+              border-radius: 10px;
+              font: bold 24px Arial;
+              cursor: pointer;
+            }
+            .fullscreen-button {
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              padding: 10px 15px;
+              background: #000;
+              color: #fff;
+              border: 2px solid #4a148c;
+              border-radius: 5px;
+              font: bold 14px Arial;
+              cursor: pointer;
+              z-index: 11;
+              display: none;
+            }
+            iframe {
+              width: 100%;
+              height: 100%;
+              border: none;
+              display: none;
+            }
+          </style>
+        </head>
+        <body>
+          <div id="game-container">
+            <iframe id="game-iframe" src="" allowfullscreen></iframe>
+            <div id="play-overlay">
+              <button class="play-button" onclick="startGame()">CLICK TO PLAY</button>
+            </div>
+            <button class="fullscreen-button" onclick="goFullscreen()">FULLSCREEN</button>
+          </div>
+          <script>
+            // Get the game URL from the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameUrl = urlParams.get('url');
+
+            if (gameUrl) {
+              document.getElementById('game-iframe').src = gameUrl;
+            } else {
+              document.getElementById('game-iframe').src = 'https://html5.gamemonetize.co/hb6b8tf7j4ot7v6qaia64199f2kvqtgu/'; // Default game
+            }
+
+            function startGame() {
+              document.getElementById('play-overlay').style.display = 'none';
+              document.getElementById('game-iframe').style.display = 'block';
+              document.getElementById('fullscreen-button').style.display = 'block';
+            }
+            function goFullscreen() {
+              const elem = document.getElementById('game-iframe');
+              if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+              } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+              } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+              } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+              }
+            }
+          </script>
+        </body>
+      </html>
+    ]]>
+  </Content>
+</Module>
